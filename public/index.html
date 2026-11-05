@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Belaris Website Checkup</title>
+<meta name="description" content="Free website checkup for small businesses. Get a score out of 100 and your three most important fixes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=Public+Sans:wght@400;500;600;700&display=swap">
+<style>
+:root {
+  --bg: #F3F5F9; --surface: #FFFFFF; --ink: #141A2E; --muted: #4E5873; --line: #D6DCE8;
+  --accent: #2B4ACB; --accent-ink: #FFFFFF; --accent-soft: #E6EBFB;
+  --good: #1E7A48; --good-soft: #E1F2E8; --warn: #8F5A00; --warn-soft: #FBEFD9; --bad: #B3261E; --bad-soft: #FBE4E2;
+  --focus: #2B4ACB;
+  --font-display: "Bricolage Grotesque", "Avenir Next", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Public Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --radius: 14px;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0F1424; --surface: #181F35; --ink: #EEF1F8; --muted: #A9B2CC; --line: #2C3654;
+    --accent: #8EA4FF; --accent-ink: #0F1424; --accent-soft: #232D52;
+    --good: #6FD39B; --good-soft: #17352A; --warn: #F2BE62; --warn-soft: #3A2E15; --bad: #FF9A92; --bad-soft: #3D1D1F; --focus: #8EA4FF;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0F1424; --surface: #181F35; --ink: #EEF1F8; --muted: #A9B2CC; --line: #2C3654;
+  --accent: #8EA4FF; --accent-ink: #0F1424; --accent-soft: #232D52;
+  --good: #6FD39B; --good-soft: #17352A; --warn: #F2BE62; --warn-soft: #3A2E15; --bad: #FF9A92; --bad-soft: #3D1D1F; --focus: #8EA4FF;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--font-body); font-size: 1.0625rem; line-height: 1.55; }
+.wrap { max-width: 40rem; margin: 0 auto; padding-block: 1.25rem 3rem;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  display: grid; gap: 1.25rem; }
+.stack { display: grid; gap: 1.25rem; }
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.15; text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(1.9rem, 6vw, 2.5rem); font-weight: 800; letter-spacing: -0.02em; }
+h2 { font-size: clamp(1.35rem, 4.5vw, 1.65rem); font-weight: 700; }
+h3 { font-size: 1.125rem; font-weight: 700; }
+p { margin: 0; }
+.muted { color: var(--muted); }
+.eyebrow { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); }
+.brand { display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-display); font-weight: 800; font-size: 1.25rem; }
+.brand svg { width: 1.5rem; height: 1.5rem; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 1.5rem; display: grid; gap: 1.25rem; min-width: 0; }
+@media (max-width: 420px) { .panel { padding: 1.15rem; } }
+
+.btn { font: inherit; font-weight: 600; font-size: 1rem; min-height: 48px; padding: 0.7rem 1.25rem; border-radius: 10px;
+  border: 2px solid transparent; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; text-decoration: none; }
+.btn-primary { background: var(--accent); color: var(--accent-ink); }
+.btn-primary:hover { filter: brightness(1.08); }
+.btn-primary[disabled] { opacity: 0.6; cursor: progress; }
+.btn-ghost { background: transparent; color: var(--ink); border-color: var(--line); }
+.btn-ghost:hover { border-color: var(--muted); }
+.btn-link { background: none; border: none; color: var(--accent); text-decoration: underline; text-underline-offset: 3px; padding: 0.5rem 0; min-height: 44px; font: inherit; font-weight: 600; cursor: pointer; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+.actions { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
+.actions.split { justify-content: space-between; }
+
+.field { display: grid; gap: 0.35rem; }
+.field label { font-weight: 600; }
+.field .hint { font-size: 0.88rem; color: var(--muted); }
+.field input[type=text], .field input[type=email], .field input[type=url] {
+  font: inherit; min-height: 48px; padding: 0.6rem 0.85rem; border: 2px solid var(--line); border-radius: 10px;
+  background: var(--surface); color: var(--ink); width: 100%; }
+.field input:focus-visible { outline: 3px solid var(--focus); outline-offset: 1px; border-color: var(--accent); }
+.field input[aria-invalid="true"] { border-color: var(--bad); }
+.row2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+@media (max-width: 520px) { .row2 { grid-template-columns: 1fr; } }
+.check { display: flex; gap: 0.75rem; align-items: flex-start; font-size: 0.95rem; cursor: pointer; }
+.check input { width: 1.3rem; height: 1.3rem; margin: 0.15rem 0 0; accent-color: var(--accent); flex: none; }
+.hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.error { color: var(--bad); font-weight: 600; font-size: 0.95rem; }
+.facts { display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; font-size: 0.9rem; color: var(--muted); }
+.facts strong { color: var(--ink); }
+.footnote { font-size: 0.82rem; color: var(--muted); }
+
+/* scan status strip */
+.scanbar { display: flex; gap: 0.75rem; align-items: center; padding: 0.7rem 0.95rem; border-radius: 10px;
+  background: var(--accent-soft); font-size: 0.92rem; min-width: 0; }
+.scanbar .txt { min-width: 0; overflow-wrap: anywhere; }
+.scanbar.done { background: var(--good-soft); }
+.scanbar.err { background: var(--bad-soft); }
+.spinner { width: 1.1rem; height: 1.1rem; border-radius: 50%; border: 2.5px solid var(--accent); border-right-color: transparent; animation: spin 0.9s linear infinite; flex: none; }
+.scanbar.done .spinner, .scanbar.err .spinner { animation: none; border-color: currentColor; border-radius: 4px; border-width: 0; width: auto; height: auto; }
+.scanbar.done .spinner::before { content: "\2713"; font-weight: 800; color: var(--good); }
+.scanbar.err .spinner::before { content: "!"; font-weight: 800; color: var(--bad); }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.progress { display: grid; gap: 0.5rem; }
+.progress-row { display: flex; justify-content: space-between; gap: 1rem; font-size: 0.9rem; font-weight: 600; }
+.bar { height: 8px; background: var(--accent-soft); border-radius: 999px; overflow: hidden; }
+.bar > span { display: block; height: 100%; background: var(--accent); border-radius: 999px; transition: width 0.25s ease; }
+fieldset { border: 0; padding: 0; margin: 0; min-width: 0; display: grid; gap: 1rem; }
+legend { padding: 0; display: grid; gap: 0.5rem; margin-bottom: 0.25rem; }
+legend h2:focus { outline: none; }
+.help { font-size: 0.95rem; color: var(--muted); }
+.options { display: grid; gap: 0.6rem; }
+.opt { display: flex; gap: 0.85rem; align-items: center; min-height: 56px; padding: 0.8rem 1rem; border: 2px solid var(--line); border-radius: 12px; background: var(--surface); cursor: pointer; }
+.opt:hover { border-color: var(--muted); }
+.opt input { width: 1.35rem; height: 1.35rem; margin: 0; accent-color: var(--accent); flex: none; }
+.opt:has(input:checked) { border-color: var(--accent); background: var(--accent-soft); }
+.opt:has(input:focus-visible) { outline: 3px solid var(--focus); outline-offset: 2px; }
+.opt input:focus-visible { outline: none; }
+
+/* results */
+.score-head { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 1.25rem; align-items: center; }
+@media (max-width: 420px) { .score-head { grid-template-columns: 1fr; justify-items: start; } }
+.ring { position: relative; width: 8.5rem; height: 8.5rem; flex: none; }
+.ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.ring .track { fill: none; stroke: var(--accent-soft); stroke-width: 12; }
+.ring .val { fill: none; stroke: var(--accent); stroke-width: 12; stroke-linecap: round; transition: stroke-dashoffset 0.8s ease; }
+.ring .num { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; }
+.ring .num b { font-family: var(--font-display); font-size: 2.6rem; font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums; }
+.ring .num span { font-size: 0.8rem; color: var(--muted); font-weight: 600; }
+.score-text { display: grid; gap: 0.5rem; min-width: 0; }
+.site { font-size: 0.9rem; color: var(--muted); overflow-wrap: anywhere; }
+.pill { display: inline-block; font-weight: 700; font-size: 0.8rem; padding: 0.15rem 0.6rem; border-radius: 999px; white-space: nowrap; }
+.s-good { background: var(--good-soft); color: var(--good); }
+.s-fair { background: var(--warn-soft); color: var(--warn); }
+.s-bad { background: var(--bad-soft); color: var(--bad); }
+.chip { font-size: 0.78rem; font-weight: 700; padding: 0.15rem 0.55rem; border-radius: 999px; background: var(--accent-soft); color: var(--ink); }
+
+.steps { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.85rem; counter-reset: step; }
+.step { display: grid; grid-template-columns: 2.25rem minmax(0, 1fr); gap: 0.85rem; padding: 1rem; border: 1px solid var(--line); border-radius: 12px; counter-increment: step; }
+.step::before { content: counter(step); font-family: var(--font-display); font-weight: 800; font-size: 1.1rem; width: 2.25rem; height: 2.25rem; border-radius: 50%; background: var(--accent); color: var(--accent-ink); display: grid; place-content: center; }
+.step-body { display: grid; gap: 0.4rem; min-width: 0; }
+.meta { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.first { font-size: 0.95rem; }
+
+.breakdown { list-style: none; padding: 0; margin: 0; display: grid; }
+.breakdown > li { display: grid; gap: 0.35rem; padding: 0.85rem 0; border-top: 1px solid var(--line); }
+.breakdown > li:first-child { border-top: 0; padding-top: 0; }
+.bk-head { display: flex; justify-content: space-between; gap: 0.75rem; align-items: center; }
+.bk-head .name { font-weight: 700; min-width: 0; }
+.bk-src { font-size: 0.78rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+.ev { margin: 0; padding-left: 1.1rem; font-size: 0.92rem; color: var(--muted); display: grid; gap: 0.2rem; }
+.issues { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.6rem; }
+.issues li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0.6rem; align-items: start; font-size: 0.95rem; }
+.issues .fix { grid-column: 2; font-size: 0.88rem; color: var(--muted); }
+.disclaimer { font-size: 0.85rem; color: var(--muted); border-left: 3px solid var(--line); padding-left: 0.75rem; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+@media (prefers-reduced-motion: reduce) { .bar > span, .ring .val { transition: none; } .spinner { animation: none; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="brand" aria-label="Belaris">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="6" fill="var(--accent)"></rect><path d="M8 7h5a3 3 0 0 1 0 6H8zm0 6h6a3 3 0 0 1 0 6H8z" fill="none" stroke="var(--accent-ink)" stroke-width="2"></path></svg>
+    Belaris
+  </header>
+
+  <main class="stack">
+    <div class="scanbar" id="scanbar" role="status" aria-live="polite" hidden>
+      <span class="spinner" aria-hidden="true"></span><span class="txt" id="scan-text"></span>
+    </div>
+
+    <!-- 1. START -->
+    <section id="v-start" class="panel" aria-labelledby="start-title">
+      <p class="eyebrow">Free website checkup</p>
+      <h1 id="start-title" tabindex="-1">How well is your website working for your business?</h1>
+      <p>We'll check your site the way a customer on a phone sees it: speed, security, accessibility, how easy you are to contact, and more. You'll get a score out of 100 and the three fixes that matter most.</p>
+      <div class="facts"><span><strong>About 2</strong> minutes</span><span><strong>4</strong> quick questions</span><span><strong>Free</strong> report</span></div>
+      <form id="start-form" class="stack" novalidate>
+        <div class="field">
+          <label for="url">Your website address</label>
+          <input type="url" id="url" name="url" inputmode="url" autocomplete="url" placeholder="yourbusiness.com" required aria-describedby="url-error">
+        </div>
+        <div class="row2">
+          <div class="field">
+            <label for="business">Business name</label>
+            <input type="text" id="business" name="business" autocomplete="organization">
+          </div>
+          <div class="field">
+            <label for="town">Town or city</label>
+            <input type="text" id="town" name="town" autocomplete="address-level2">
+          </div>
+        </div>
+        <p id="url-error" class="error" role="alert" hidden></p>
+        <div class="actions"><button class="btn btn-primary" type="submit" id="start-btn">Check my website</button></div>
+      </form>
+    </section>
+
+    <!-- 2. QUESTIONS -->
+    <section id="v-quiz" class="panel" hidden>
+      <div class="progress">
+        <div class="progress-row"><span id="q-count">Question 1 of 4</span><span class="muted">While we scan your site</span></div>
+        <div class="bar" aria-hidden="true"><span id="q-bar" style="width:25%"></span></div>
+      </div>
+      <form id="q-form" novalidate>
+        <fieldset aria-describedby="q-help q-error">
+          <legend><h2 id="q-title" tabindex="-1"></h2><p id="q-help" class="help"></p></legend>
+          <div class="options" id="q-options"></div>
+          <p id="q-error" class="error" role="alert" hidden>Choose an answer to continue. "Not sure" is fine.</p>
+        </fieldset>
+        <div class="actions split" style="margin-top:1.25rem">
+          <button class="btn btn-ghost" id="q-back" type="button">Back</button>
+          <button class="btn btn-primary" id="q-next" type="submit">Next</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- 3. LEAD GATE -->
+    <section id="v-gate" class="panel" hidden aria-labelledby="gate-title">
+      <h2 id="gate-title" tabindex="-1">Your results are almost ready</h2>
+      <p class="muted">Enter your email to see your score and your three next steps.</p>
+      <form id="gate-form" class="stack" novalidate>
+        <div class="row2">
+          <div class="field"><label for="name">First name</label><input type="text" id="name" autocomplete="given-name"></div>
+          <div class="field"><label for="email">Email</label><input type="email" id="email" autocomplete="email" required aria-describedby="gate-error"></div>
+        </div>
+        <div class="hp" aria-hidden="true"><label for="website_confirm">Leave this empty</label><input type="text" id="website_confirm" tabindex="-1" autocomplete="off"></div>
+        <label class="check"><input type="checkbox" id="consent"> <span>Belaris can follow up with tips and an offer to review my results. I can unsubscribe anytime.</span></label>
+        <p id="gate-error" class="error" role="alert" hidden></p>
+        <div class="actions"><button class="btn btn-primary" type="submit" id="gate-btn">See my score</button></div>
+        <p class="footnote">We only use your email to contact you about your results, and for tips only if you tick the box. We never sell it.</p>
+      </form>
+    </section>
+
+    <!-- 4. RESULTS -->
+    <section id="v-results" class="stack" hidden aria-labelledby="r-title">
+      <div class="panel">
+        <p class="eyebrow">Your website score</p>
+        <div class="score-head">
+          <div class="ring" role="img" id="ring" aria-label="">
+            <svg viewBox="0 0 120 120" aria-hidden="true"><circle class="track" cx="60" cy="60" r="52"></circle><circle class="val" id="ring-val" cx="60" cy="60" r="52" stroke-dasharray="326.73" stroke-dashoffset="326.73"></circle></svg>
+            <div class="num" aria-hidden="true"><b id="score-num">0</b><span>out of 100</span></div>
+          </div>
+          <div class="score-text">
+            <h1 id="r-title" tabindex="-1"></h1>
+            <span><span class="pill" id="band"></span></span>
+            <p id="band-summary"></p>
+            <p class="site" id="r-site"></p>
+          </div>
+        </div>
+      </div>
+      <div class="panel">
+        <div><h2>Your three next steps</h2><p class="muted">Ordered by impact. Start with number one.</p></div>
+        <ol class="steps" id="steps"></ol>
+      </div>
+      <div class="panel" id="a11y-panel">
+        <div><h2>Accessibility check</h2><p class="muted" id="a11y-sub"></p></div>
+        <ul class="issues" id="a11y-issues"></ul>
+        <p class="disclaimer">This is an automated check of your homepage. Automated tools catch only some accessibility problems, so a clean result here is not a guarantee of ADA or WCAG compliance.</p>
+      </div>
+      <div class="panel">
+        <h2>How you scored in each area</h2>
+        <ul class="breakdown" id="breakdown"></ul>
+      </div>
+      <div class="panel">
+        <h2>Want help with these?</h2>
+        <p>A Belaris specialist can walk through your results with you in a free 20-minute call.</p>
+        <div class="actions">
+          <a class="btn btn-primary" id="book" href="#" target="_blank" rel="noopener">Book a free review</a>
+          <button class="btn-link" id="restart" type="button">Check another site</button>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+// Set your booking page here (Calendly, HubSpot meetings, etc.)
+window.BELARIS_CONFIG = window.BELARIS_CONFIG || { bookingUrl: "https://belaris.com/contact" };
+</script>
+<script>
+(function () {
+  const $ = id => document.getElementById(id);
+  const VIEWS = ["v-start", "v-quiz", "v-gate", "v-results"];
+  const state = { id: null, url: "", questions: [], step: 0, answers: {}, scan: "idle", stage: "", poll: null };
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const host = u => { try { return new URL(u).hostname.replace(/^www\./, ""); } catch (e) { return u; } };
+
+  function show(v, focusId) {
+    VIEWS.forEach(x => { $(x).hidden = x !== v; });
+    if (focusId) $(focusId).focus();
+    window.scrollTo(0, 0);
+  }
+
+  async function api(path, body) {
+    const res = await fetch(path, body ? { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) } : {});
+    let data = {};
+    try { data = await res.json(); } catch (e) {}
+    if (!res.ok) { const err = new Error(data.error || "Something went wrong. Please try again."); err.data = data; err.status = res.status; throw err; }
+    return data;
+  }
+
+  // ---- scan status ----
+  function renderScanbar() {
+    const bar = $("scanbar");
+    bar.hidden = state.scan === "idle";
+    bar.className = "scanbar" + (state.scan === "done" ? " done" : state.scan === "error" ? " err" : "");
+    const site = host(state.url);
+    $("scan-text").innerHTML = state.scan === "done" ? "Finished checking <b>" + esc(site) + "</b>."
+      : state.scan === "error" ? esc(state.stage) + ' <button class="btn-link" type="button" id="fix-url">Change the address</button>'
+      : "Checking <b>" + esc(site) + "</b>: " + esc(state.stage || "starting") + "…";
+    const fix = $("fix-url");
+    if (fix) fix.onclick = () => { reset(); show("v-start", "url"); };
+  }
+  function poll() {
+    clearTimeout(state.poll);
+    if (!state.id || state.scan === "done" || state.scan === "error") return;
+    state.poll = setTimeout(async () => {
+      try {
+        const s = await api("/api/scan/" + state.id);
+        state.scan = s.status === "done" ? "done" : s.status === "error" ? "error" : "running";
+        state.stage = s.status === "error" ? s.error : s.stage;
+        renderScanbar();
+      } catch (e) {
+        if (e.status === 404) { state.scan = "error"; state.stage = e.message; renderScanbar(); return; }
+      }
+      poll();
+    }, 2000);
+  }
+
+  // ---- 1. start ----
+  $("start-form").addEventListener("submit", async e => {
+    e.preventDefault();
+    const err = $("url-error"); err.hidden = true; $("url").removeAttribute("aria-invalid");
+    const btn = $("start-btn"); btn.disabled = true; btn.textContent = "Starting…";
+    try {
+      const r = await api("/api/scan", { url: $("url").value, business: $("business").value, town: $("town").value });
+      Object.assign(state, { id: r.id, url: r.url, questions: r.questions, step: 0, answers: {}, scan: "running", stage: "starting" });
+      renderScanbar(); poll();
+      renderQuestion(); show("v-quiz", "q-title");
+    } catch (ex) {
+      err.textContent = ex.message; err.hidden = false; $("url").setAttribute("aria-invalid", "true"); $("url").focus();
+    } finally { btn.disabled = false; btn.textContent = "Check my website"; }
+  });
+
+  // ---- 2. questions ----
+  function renderQuestion() {
+    const q = state.questions[state.step], n = state.step + 1, total = state.questions.length;
+    $("q-count").textContent = "Question " + n + " of " + total;
+    $("q-bar").style.width = (n / total * 100) + "%";
+    $("q-title").textContent = q.q;
+    $("q-help").textContent = q.help;
+    $("q-error").hidden = true;
+    const chosen = state.answers[q.id];
+    $("q-options").innerHTML = q.options.map((o, i) =>
+      '<label class="opt" for="opt-' + i + '"><input type="radio" name="answer" id="opt-' + i + '" value="' + i + '"' +
+      (chosen === i ? " checked" : "") + "><span>" + esc(o.label) + "</span></label>").join("");
+    $("q-next").textContent = n === total ? "Continue" : "Next";
+  }
+  $("q-options").addEventListener("change", e => {
+    if (e.target.name === "answer") { state.answers[state.questions[state.step].id] = Number(e.target.value); $("q-error").hidden = true; }
+  });
+  $("q-form").addEventListener("submit", e => {
+    e.preventDefault();
+    if (state.answers[state.questions[state.step].id] === undefined) {
+      $("q-error").hidden = false; const f = document.querySelector("#q-options input"); if (f) f.focus(); return;
+    }
+    if (state.step < state.questions.length - 1) { state.step++; renderQuestion(); $("q-title").focus(); }
+    else show("v-gate", "gate-title");
+  });
+  $("q-back").addEventListener("click", () => {
+    if (state.step === 0) { show("v-start", "start-title"); return; }
+    state.step--; renderQuestion(); $("q-title").focus();
+  });
+
+  // ---- 3. lead gate ----
+  $("gate-form").addEventListener("submit", async e => {
+    e.preventDefault();
+    const err = $("gate-error"); err.hidden = true; $("email").removeAttribute("aria-invalid");
+    const email = $("email").value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) {
+      err.textContent = "Enter a valid email address so we can send your report."; err.hidden = false;
+      $("email").setAttribute("aria-invalid", "true"); $("email").focus(); return;
+    }
+    const btn = $("gate-btn"); btn.disabled = true;
+    btn.textContent = state.scan === "done" ? "Preparing your report…" : "Finishing your scan…";
+    try {
+      const r = await api("/api/report", { id: state.id, answers: state.answers, website_confirm: $("website_confirm").value,
+        lead: { name: $("name").value, email, consent: $("consent").checked } });
+      clearTimeout(state.poll); state.scan = "idle"; renderScanbar();
+      renderResults(r); show("v-results", "r-title");
+    } catch (ex) {
+      err.textContent = ex.message; err.hidden = false;
+      if (ex.data && ex.data.field === "email") { $("email").setAttribute("aria-invalid", "true"); $("email").focus(); }
+    } finally { btn.disabled = false; btn.textContent = "See my score"; }
+  });
+
+  // ---- 4. results ----
+  const TONE = { good: "s-good", fair: "s-fair", bad: "s-bad" };
+  const LABEL = { good: "Good", fair: "Fair", bad: "Needs work" };
+  const SRC = { scan: "Checked automatically", google: "From your Google listing", owner: "From your answer" };
+  function renderResults(r) {
+    $("r-title").textContent = r.band.title;
+    $("band").textContent = r.band.label; $("band").className = "pill " + TONE[r.band.tone];
+    $("band-summary").textContent = r.band.summary;
+    $("r-site").textContent = "Checked " + host(r.scanned.url || state.url) + (r.scanned.platform ? " · built with " + r.scanned.platform : "");
+    $("ring").setAttribute("aria-label", "Score: " + r.score + " out of 100");
+    $("score-num").textContent = r.score;
+    const C = 2 * Math.PI * 52;
+    $("ring-val").style.strokeDashoffset = C;
+    requestAnimationFrame(() => requestAnimationFrame(() => { $("ring-val").style.strokeDashoffset = C * (1 - r.score / 100); }));
+
+    $("steps").innerHTML = r.steps.map(s => '<li class="step"><div class="step-body"><h3>' + esc(s.title) + "</h3>" +
+      '<div class="meta"><span class="chip">' + esc(s.topic) + '</span><span class="chip">' + esc(s.effort) + "</span></div>" +
+      "<p>" + esc(s.why) + '</p><p class="first"><strong>First step:</strong> ' + esc(s.step) + "</p></div></li>").join("");
+
+    const a = r.accessibility;
+    $("a11y-panel").hidden = !a;
+    if (a) {
+      $("a11y-sub").textContent = a.issues.length ? "What people with disabilities may run into on your homepage." : "No problems found by our automated check.";
+      const imp = { critical: ["Serious", "s-bad"], serious: ["Serious", "s-bad"], moderate: ["Moderate", "s-fair"], minor: ["Minor", "s-fair"] };
+      $("a11y-issues").innerHTML = a.issues.map(i => { const t = imp[i.impact] || ["Check", "s-fair"];
+        return '<li><span class="pill ' + t[1] + '">' + t[0] + "</span><span>" + esc(i.text) + '</span><span class="fix">Fix: ' + esc(i.fix) + "</span></li>"; }).join("");
+    }
+
+    $("breakdown").innerHTML = r.items.map(i => {
+      const ev = (i.answer ? ['You said: "' + i.answer + '"'] : []).concat(i.evidence || []);
+      return '<li><div class="bk-head"><span class="name">' + esc(i.topic) + '</span><span class="pill ' + TONE[i.status] + '">' + LABEL[i.status] + "</span></div>" +
+        '<span class="bk-src">' + SRC[i.source] + "</span>" +
+        (ev.length ? '<ul class="ev">' + ev.map(x => "<li>" + esc(x) + "</li>").join("") + "</ul>" : "") + "</li>";
+    }).join("");
+    $("book").href = window.BELARIS_CONFIG.bookingUrl;
+  }
+
+  function reset() {
+    clearTimeout(state.poll);
+    Object.assign(state, { id: null, url: "", questions: [], step: 0, answers: {}, scan: "idle", stage: "" });
+    renderScanbar();
+  }
+  $("restart").addEventListener("click", () => { reset(); $("url").value = ""; show("v-start", "url"); });
+})();
+</script>
+</body>
+</html>

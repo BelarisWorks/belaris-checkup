@@ -1,0 +1,118 @@
+/* Belaris Website Checkup. Everything is scoped under .bc so it can't change the rest of the site.
+   Fonts come from your theme. To restyle, override the variables below in Appearance → Customize → Additional CSS. */
+.bc {
+  --bc-surface: #FFFFFF; --bc-ink: #141A2E; --bc-muted: #4E5873; --bc-line: #D6DCE8; --bc-bg-soft: #F3F5F9;
+  --bc-accent: #2B4ACB; --bc-accent-ink: #FFFFFF; --bc-accent-soft: #E6EBFB;
+  --bc-good: #1E7A48; --bc-good-soft: #E1F2E8; --bc-warn: #8F5A00; --bc-warn-soft: #FBEFD9; --bc-bad: #B3261E; --bc-bad-soft: #FBE4E2;
+  --bc-radius: 14px;
+  max-width: 40rem; margin: 0 auto; display: grid; gap: 1.25rem;
+  color: var(--bc-ink); font-size: 1.0625rem; line-height: 1.55; text-align: left;
+}
+.bc *, .bc *::before, .bc *::after { box-sizing: border-box; }
+.bc [hidden] { display: none !important; }
+.bc p { margin: 0; }
+.bc .bc-stack { display: grid; gap: 1.25rem; }
+.bc .bc-h1, .bc .bc-h2 { display: block; margin: 0; line-height: 1.15; text-wrap: balance; color: var(--bc-ink); }
+.bc .bc-h1 { font-size: clamp(1.75rem, 5.5vw, 2.3rem); font-weight: 800; letter-spacing: -0.01em; }
+.bc .bc-h2 { font-size: clamp(1.3rem, 4.3vw, 1.6rem); font-weight: 700; }
+.bc .bc-muted { color: var(--bc-muted); }
+.bc .bc-eyebrow { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--bc-accent); }
+.bc .bc-panel { background: var(--bc-surface); border: 1px solid var(--bc-line); border-radius: var(--bc-radius); padding: 1.5rem; display: grid; gap: 1.25rem; min-width: 0; }
+@media (max-width: 420px) { .bc .bc-panel { padding: 1.15rem; } }
+
+.bc .bc-btn { font: inherit; font-weight: 600; font-size: 1rem; line-height: 1.2; min-height: 48px; padding: 0.7rem 1.25rem; margin: 0; border-radius: 10px;
+  border: 2px solid transparent; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  text-decoration: none; text-transform: none; letter-spacing: normal; box-shadow: none; width: auto; }
+.bc .bc-btn-primary, .bc .bc-btn-primary:visited { background: var(--bc-accent); color: var(--bc-accent-ink); }
+.bc .bc-btn-primary:hover, .bc .bc-btn-primary:focus { background: var(--bc-accent); color: var(--bc-accent-ink); filter: brightness(1.08); }
+.bc .bc-btn-primary[disabled] { opacity: 0.6; cursor: progress; }
+.bc .bc-btn-ghost { background: transparent; color: var(--bc-ink); border-color: var(--bc-line); }
+.bc .bc-btn-ghost:hover { background: transparent; color: var(--bc-ink); border-color: var(--bc-muted); }
+.bc .bc-btn-link { background: none; border: none; color: var(--bc-accent); text-decoration: underline; text-underline-offset: 3px; padding: 0.5rem 0; min-height: 44px; font: inherit; font-weight: 600; cursor: pointer; box-shadow: none; text-transform: none; letter-spacing: normal; border-radius: 0; }
+.bc .bc-btn-link:hover { background: none; color: var(--bc-accent); }
+.bc :focus-visible { outline: 3px solid var(--bc-accent); outline-offset: 3px; }
+.bc .bc-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: center; }
+.bc .bc-split { justify-content: space-between; margin-top: 1.25rem; }
+
+.bc .bc-field { display: grid; gap: 0.35rem; min-width: 0; }
+.bc .bc-field label { font-weight: 600; margin: 0; font-size: 1rem; display: block; color: var(--bc-ink); }
+.bc .bc-field input { font: inherit; font-size: 1rem; min-height: 48px; padding: 0.6rem 0.85rem; margin: 0; border: 2px solid var(--bc-line); border-radius: 10px;
+  background: var(--bc-surface); color: var(--bc-ink); width: 100%; max-width: 100%; box-shadow: none; }
+.bc .bc-field input:focus-visible { outline: 3px solid var(--bc-accent); outline-offset: 1px; border-color: var(--bc-accent); }
+.bc .bc-field input[aria-invalid="true"] { border-color: var(--bc-bad); }
+.bc .bc-row2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
+@media (max-width: 520px) { .bc .bc-row2 { grid-template-columns: 1fr; } }
+.bc .bc-check { display: flex; gap: 0.75rem; align-items: flex-start; font-size: 0.95rem; color: var(--bc-ink); cursor: pointer; margin: 0; font-weight: 400; }
+.bc .bc-check input { width: 1.3rem; height: 1.3rem; margin: 0.15rem 0 0; accent-color: var(--bc-accent); flex: none; }
+.bc .bc-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.bc .bc-error { color: var(--bc-bad); font-weight: 600; font-size: 0.95rem; }
+.bc .bc-facts { display: flex; flex-wrap: wrap; gap: 0.5rem 1.25rem; font-size: 0.9rem; color: var(--bc-muted); }
+.bc .bc-facts strong { color: var(--bc-ink); }
+.bc .bc-footnote { font-size: 0.82rem; color: var(--bc-muted); }
+.bc .bc-footnote a { color: var(--bc-accent); }
+
+.bc .bc-scanbar { display: flex; gap: 0.75rem; align-items: center; padding: 0.7rem 0.95rem; border-radius: 10px; background: var(--bc-accent-soft); font-size: 0.92rem; min-width: 0; }
+.bc .bc-scantext { min-width: 0; overflow-wrap: anywhere; }
+.bc .bc-scanbar.bc-done { background: var(--bc-good-soft); }
+.bc .bc-scanbar.bc-err { background: var(--bc-bad-soft); }
+.bc .bc-spinner { width: 1.1rem; height: 1.1rem; border-radius: 50%; border: 2.5px solid var(--bc-accent); border-right-color: transparent; animation: bc-spin 0.9s linear infinite; flex: none; }
+.bc .bc-done .bc-spinner, .bc .bc-err .bc-spinner { animation: none; border: 0; width: auto; height: auto; border-radius: 0; }
+.bc .bc-done .bc-spinner::before { content: "\2713"; font-weight: 800; color: var(--bc-good); }
+.bc .bc-err .bc-spinner::before { content: "!"; font-weight: 800; color: var(--bc-bad); }
+@keyframes bc-spin { to { transform: rotate(360deg); } }
+
+.bc .bc-progress { display: grid; gap: 0.5rem; }
+.bc .bc-progress-row { display: flex; justify-content: space-between; gap: 1rem; font-size: 0.9rem; font-weight: 600; }
+.bc .bc-bar { height: 8px; background: var(--bc-accent-soft); border-radius: 999px; overflow: hidden; }
+.bc .bc-bar > span { display: block; height: 100%; width: 25%; background: var(--bc-accent); border-radius: 999px; transition: width 0.25s ease; }
+.bc fieldset { border: 0; padding: 0; margin: 0; min-width: 0; display: grid; gap: 1rem; }
+.bc legend { padding: 0; margin: 0 0 0.25rem; display: grid; gap: 0.5rem; width: 100%; float: none; border: 0; font-size: inherit; }
+.bc legend .bc-h2:focus { outline: none; }
+.bc .bc-help { font-size: 0.95rem; color: var(--bc-muted); font-weight: 400; }
+.bc .bc-options { display: grid; gap: 0.6rem; }
+.bc .bc-opt { display: flex; gap: 0.85rem; align-items: center; min-height: 56px; padding: 0.8rem 1rem; margin: 0; border: 2px solid var(--bc-line); border-radius: 12px; background: var(--bc-surface); cursor: pointer; font-weight: 400; font-size: 1rem; color: var(--bc-ink); }
+.bc .bc-opt:hover { border-color: var(--bc-muted); }
+.bc .bc-opt input { width: 1.35rem; height: 1.35rem; margin: 0; accent-color: var(--bc-accent); flex: none; }
+.bc .bc-opt.bc-checked { border-color: var(--bc-accent); background: var(--bc-accent-soft); }
+.bc .bc-opt.bc-focus { outline: 3px solid var(--bc-accent); outline-offset: 2px; }
+.bc .bc-opt input:focus-visible { outline: none; }
+
+.bc .bc-score-head { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 1.25rem; align-items: center; }
+@media (max-width: 420px) { .bc .bc-score-head { grid-template-columns: 1fr; justify-items: start; } }
+.bc .bc-ring { position: relative; width: 8.5rem; height: 8.5rem; flex: none; }
+.bc .bc-ring svg { width: 100%; height: 100%; transform: rotate(-90deg); display: block; }
+.bc .bc-track { fill: none; stroke: var(--bc-accent-soft); stroke-width: 12; }
+.bc .bc-val { fill: none; stroke: var(--bc-accent); stroke-width: 12; stroke-linecap: round; transition: stroke-dashoffset 0.8s ease; }
+.bc .bc-num { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; }
+.bc .bc-num b { font-size: 2.6rem; font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums; }
+.bc .bc-num span { font-size: 0.8rem; color: var(--bc-muted); font-weight: 600; }
+.bc .bc-score-text { display: grid; gap: 0.5rem; min-width: 0; }
+.bc .bc-site { font-size: 0.9rem; color: var(--bc-muted); overflow-wrap: anywhere; }
+.bc .bc-pill { display: inline-block; font-weight: 700; font-size: 0.8rem; padding: 0.15rem 0.6rem; border-radius: 999px; white-space: nowrap; }
+.bc .bc-s-good { background: var(--bc-good-soft); color: var(--bc-good); }
+.bc .bc-s-fair { background: var(--bc-warn-soft); color: var(--bc-warn); }
+.bc .bc-s-bad { background: var(--bc-bad-soft); color: var(--bc-bad); }
+.bc .bc-chip { font-size: 0.78rem; font-weight: 700; padding: 0.15rem 0.55rem; border-radius: 999px; background: var(--bc-accent-soft); color: var(--bc-ink); }
+
+.bc .bc-steps { list-style: none; padding: 0; margin: 0; display: grid; gap: 0.85rem; counter-reset: bcstep; }
+.bc .bc-steps > li { display: grid; grid-template-columns: 2.25rem minmax(0, 1fr); gap: 0.85rem; padding: 1rem; margin: 0; border: 1px solid var(--bc-line); border-radius: 12px; counter-increment: bcstep; }
+.bc .bc-steps > li::before { content: counter(bcstep); font-weight: 800; font-size: 1.1rem; width: 2.25rem; height: 2.25rem; border-radius: 50%; background: var(--bc-accent); color: var(--bc-accent-ink); display: grid; place-content: center; }
+.bc .bc-step-body { display: grid; gap: 0.4rem; min-width: 0; }
+.bc .bc-step-title { font-size: 1.125rem; font-weight: 700; margin: 0; line-height: 1.25; }
+.bc .bc-meta { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.bc .bc-first { font-size: 0.95rem; }
+
+.bc .bc-breakdown, .bc .bc-issues, .bc .bc-ev { list-style: none; margin: 0; padding: 0; }
+.bc .bc-breakdown { display: grid; }
+.bc .bc-breakdown > li { display: grid; gap: 0.35rem; padding: 0.85rem 0; margin: 0; border-top: 1px solid var(--bc-line); }
+.bc .bc-breakdown > li:first-child { border-top: 0; padding-top: 0; }
+.bc .bc-bk-head { display: flex; justify-content: space-between; gap: 0.75rem; align-items: center; }
+.bc .bc-bk-head .bc-name { font-weight: 700; min-width: 0; }
+.bc .bc-bk-src { font-size: 0.78rem; font-weight: 600; color: var(--bc-muted); text-transform: uppercase; letter-spacing: 0.06em; }
+.bc .bc-ev { padding-left: 1.1rem; list-style: disc; font-size: 0.92rem; color: var(--bc-muted); display: grid; gap: 0.2rem; }
+.bc .bc-ev li { margin: 0; }
+.bc .bc-issues { display: grid; gap: 0.6rem; }
+.bc .bc-issues li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0.6rem; align-items: start; font-size: 0.95rem; margin: 0; }
+.bc .bc-issues .bc-fix { grid-column: 2; font-size: 0.88rem; color: var(--bc-muted); }
+.bc .bc-disclaimer { font-size: 0.85rem; color: var(--bc-muted); border-left: 3px solid var(--bc-line); padding-left: 0.75rem; }
+@media (prefers-reduced-motion: reduce) { .bc .bc-bar > span, .bc .bc-val { transition: none; } .bc .bc-spinner { animation: none; } }
